@@ -6,11 +6,11 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="{% static 'ecommerce/css/bootstrap.min.css' %}" rel="stylesheet">
   <title>
     {% block title %}
       Compu - Prepago
     {% endblock %}
-  <link href="{% static 'ecommerce/css/bootstrap.css' %}" rel="stylesheet">
   </title>
 </head>
 <body>
@@ -47,8 +47,8 @@
           <a class="nav-link disabled">Disabled</a>
         </li>
       </ul>
-      <form class="form-inline my-2 my-lg-0">
-        <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+      <form class="form-inline my-2 my-lg-0 mr-4" action="{% url 'ecommerce:search' %}">
+        <input class="form-control mr-sm-2" name="input" type="search" placeholder="Search" aria-label="Search">
         <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
       </form>
       <a href="/mycar" class="btn btn-outline-success"> 
@@ -62,10 +62,10 @@
   <div class="container">
     <div class="row">
       <div class="col-lg-3">
-        <h1 class="my-4">Compu prepagos</h1>
+        <img src="{% static 'ecommerce/img/logo.png' %}">
         <div class="list-group">
           {% for cat in categories %}
-            <a href="{% url 'ecommerce:category' cat.slug %} class="list-group-item>{{cat.name}}</a>
+            <a href="{% url 'ecommerce:categories' cat.slug %} class="list-group-item>{{cat.name}}</a>
           {% endfor %}
         </div>
       </div>
