@@ -1,0 +1,2 @@
+python -m pip install django-autoslug
+pip install django-bootstrap4
