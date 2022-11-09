@@ -1,2 +1,8 @@
 python -m pip install django-autoslug
 pip install django-bootstrap4
+
+
+Sandbox Account
+sb-osor4722132421@business.example.com
+Client ID
+AeFlTeCRTxth38ptllemdyIqSRoHPtcQr1oCyQofMBqUqctDWnQKTPrstcKoI2zObFXBfcjkEqNbS-Ln

@@ -3,23 +3,23 @@ from .models import Category, Product
 from django.contrib import messages
 
 def index(request):
-  template_name = 'templates/index.html'
+  template_name = 'index.html'
   categories = Category.objects.filter(active=True)
   products = Product.objects.filter(active=True)
   context = {'products': products, 'categories': categories}
-  return render(request, "index.html", context)
+  return render(request, template_name, context)
 
 def search_category(request, slug):
   template_name = 'list.html'
   cat = Category.objects.get(slug=slug)
   categories = Category.objects.filter(active=True)
-  products = Product.objects.filter(active=True, category=cat)
+  products = Product.objects.filter(active=True, categories=cat)
   context = {'products': products, 'categories': categories}
   return render(request, template_name, context)
 
 def search(request):
   template_name = 'list.html'
-  input = request.GET.get['input']
+  input = request.GET['input']
   products = Product.objects.filter(active=True, name__icontains=input)
   categories = Category.objects.filter(active=True)
   context = {'products': products, 'categories': categories}
@@ -36,7 +36,8 @@ def detail(request, slug):
   
 def cart(request, slug):
   product = Product.objects.get(slug=slug)
-  initial = {'items':[], 'price': 0.0, 'count':0}
+
+  initial = {'items':[], 'price':0.0, 'count':0}
   session = request.session.get('data', initial)
   if slug in session['items']:
     messages.error(request, 'Producto ya existe en el carro de compras')
@@ -45,8 +46,8 @@ def cart(request, slug):
     session['price'] += float(product.price)
     session['count'] += 1
     request.session['data'] = session
-    messages.succes(request, 'Agregado con exito')
-  return redirect('ecommmerce:detail', slug=slug)
+    messages.success(request, 'Agregado con exito')
+  return redirect('ecommmerce:detail', slug)
 
 def mycart(request):
   template_name = 'list.html'
@@ -55,4 +56,8 @@ def mycart(request):
   categories = Category.objects.filter(active=True)
   context = {'products': products, 'categories': categories}
   return render(request, template_name, context)
+
+def checkout(request):
+  template_name = 'checkout.html'
+  return render(request, template_name)
 
