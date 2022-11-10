@@ -12,6 +12,7 @@ def index(request):
 def search_category(request, slug):
   template_name = 'list.html'
   cat = Category.objects.get(slug=slug)
+  print("cat", cat)
   categories = Category.objects.filter(active=True)
   products = Product.objects.filter(active=True, categories=cat)
   context = {'products': products, 'categories': categories}
