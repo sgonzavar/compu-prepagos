@@ -14,7 +14,7 @@ def search_category(request, slug):
   cat = Category.objects.get(slug=slug)
   print("cat", cat)
   categories = Category.objects.filter(active=True)
-  products = Product.objects.filter(active=True, categories=cat)
+  products = Product.objects.filter(active=True, category=cat)
   context = {'products': products, 'categories': categories}
   return render(request, template_name, context)
 

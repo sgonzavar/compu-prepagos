@@ -65,7 +65,7 @@
         <img src="{% static 'ecommerce/img/logo.png' %}">
         <div class="list-group">
           {% for cat in categories %}
-            <a href="{% url 'ecommerce:categories' cat.slug %} class="list-group-item>{{cat.name}}</a>
+            <a href="{% url 'ecommerce:categories' cat.slug %}" class="list-group-item">{{cat.name}}</a>
           {% endfor %}
         </div>
       </div>
