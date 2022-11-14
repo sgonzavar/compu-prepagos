@@ -8,8 +8,9 @@
     {% for product in products %}
       <div class="col-lg-3 col-md-4 mb-4">
         <div class="card h-100">
-          <a href="{% url 'ecommerce:detail' product.slug %}"></a>
-          <img src="{{product.image}}" class="card-img-top" alt="{{product.name}}">
+          <a href="{% url 'ecommerce:detail' product.slug %}">
+            <img src="{{product.image}}" class="card-img-top" alt="{{product.name}}">
+          </a>
           <div class="card-body">
             <h4 class="card-title">
               {{product.name}}
