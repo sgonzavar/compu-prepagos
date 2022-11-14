@@ -13,7 +13,7 @@ def index(request):
 
 
 def search_category(request, slug):
-    requests.session['paypal'] = True
+    request.session['paypal'] = True
     template_name = 'list.html'
     cat = Category.objects.get(slug=slug)
     categories = Category.objects.filter(active=True)
@@ -23,7 +23,7 @@ def search_category(request, slug):
 
 
 def search(request):
-    requests.session['paypal'] = True
+    request.session['paypal'] = True
     template_name = 'list.html'
     input = request.GET['input']
     products = Product.objects.filter(active=True, name__icontains=input)
