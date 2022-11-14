@@ -1,5 +1,6 @@
 python -m pip install django-autoslug
 pip install django-bootstrap4
+pip install requests
 
 
 Sandbox Account

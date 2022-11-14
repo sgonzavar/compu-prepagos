@@ -1,25 +1,26 @@
 {% extends 'base/base.html'%}
 {% block title %} Detail {% endblock%}
 {% block content %}
-  <div class="row">
-    <div class="col-md-4">
-      <img src="{{product.image}}" alt="photo" class="img-fluid">
-    </div>
-
-    <div class="col-md-8">
-      <h3 class="my-3">{{products.name}}</h3>
-      <p>{{products.description}}</p>
-      <h3 class="my 3">Product Detail</h3>
-      <ul>
-        <li>Mark: {{products.mark}}</li>
-        <li>Price: {{products.price}}</li>
-        <li>Leading: {{products.leading}}</li>
-      </ul>
-      <div class="card-footer">
-        {% comment %} <small class="text-muted">
-          <a href="{% url 'ecommerce:cart' products.slug %}" class="btn btn-success">Add</a>
-        </small> {% endcomment %}
-      </div>
+{% for product in products %}
+<div class="row">
+  <div class="col-md-8">
+    <h3 class="my-3">{{product.name}}</h3>
+    <p>{{product.description}}</p>
+    <h3 class="my 3">Product Detail</h3>
+    <ul>
+      <li>Mark: {{product.mark}}</li>
+      <li>Price: {{product.price}}</li>
+      <li>Leading: {{product.leading}}</li>
+    </ul>
+    <div class="card-footer">
+      <small class="text-muted">
+        <a href="{% url 'ecommerce:cart' product.slug %}" class="btn btn-success">Agregar a Carrito</a>
+      </small>
     </div>
   </div>
+  <div class="col-md-4">
+    <img src="{{product.image}}" alt="photo" class="img-fluid">
+  </div>
+</div>
+{% endfor %}
 {% endblock %}

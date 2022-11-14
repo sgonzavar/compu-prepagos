@@ -1,0 +1,15 @@
+{% load static %}
+{% include "index.html" %}
+
+<body>
+  <div class="container">
+    <div class="item">
+      <div class="close">x</div>
+      <div class="content">
+        <h3>gracias por su compra</h3>
+        <p>No te pierdas las mejores ofertas</p>
+        <a href="{% url 'ecommerce:index' %}">comprar mas</a>
+      </div>
+    </div>
+  </div>
+</body>

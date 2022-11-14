@@ -29,3 +29,21 @@ class Product(models.Model):
 
   class Meta:
     verbose_name_plural= 'Product'
+
+
+class Order(models.Model):
+  orderNum = models.CharField(max_length=9, null=True, blank=True)
+  customer = models.CharField(max_length=200, null=True, blank=True)
+  create = models.DateField(auto_now_add=True)
+  status = models.BooleanField(default=True)
+
+  def __str__(self) -> str:
+    return self.orderNum
+
+class Order_Details(models.Model):
+  product = models.ForeignKey(Product, on_delete=models.CASCADE)
+  amount = models.IntegerField(default= 1)
+  order = models.ForeignKey(Order, on_delete=models.CASCADE)
+
+  def __str__(self) -> str:
+    return self.product.id
