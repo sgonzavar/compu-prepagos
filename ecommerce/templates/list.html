@@ -1,0 +1,110 @@
+{% extends 'base/base.html' %}
+{% block title %}
+  {{title}}
+{% endblock %}
+
+{% block content %}
+  <div class="row">
+    {% for product in products %}
+      <div class="col-lg-3 col-md-4 mb-4">
+        <div class="card h-100">
+          <a href="{% url 'ecommerce:detail' item.slug %}">
+            <img src="{{product.image}}"class="card-img-top">
+          </a>
+          <div class="card-body">
+            <h4 class="card-title">
+              <a href="{% url 'ecommerce:detail' item.slug %}">
+                {{product.name}}
+              </a>
+            </h4>
+            <h5>${{product.price|floatformat:"1"}}</h5>
+            <p class="card-text">{{product.mark}}</p>
+          </div>
+
+          {% if request.session.paypal %}
+          <div class="card-footer text-center">
+            <small>
+              <a class="btn btn-success" href="{% url 'ecommerce:cart' product.slug %}">Adiccionar</a>
+            </small>
+          </div>
+          {% endif %}
+        </div>
+      </div>
+    {% empty %}
+      <div class="card w-100">
+        <div class="card-body">
+          <h4>No se econtraron nenas mi so 🤙 </h4>
+        </div>
+      </div>
+    {% endfor %}
+  </div>
+
+{% if request.session.paypal == False %}
+<div class="card-footer">
+  <div id="paypal-button-container"></div>
+</div>
+{% endif %}
+  <script src="https://www.paypal.com/sdk/js?client-id=AeFlTeCRTxth38ptllemdyIqSRoHPtcQr1oCyQofMBqUqctDWnQKTPrstcKoI2zObFXBfcjkEqNbS-Ln&currency=USD"></script>
+  <script>
+    function getCookie(name) {
+      var cookieValue = null;
+      if (document.cookie && document.cookie !== '') {
+        var cookies = document.cookie.split(';');
+        for (var i = 0; i < cookies.length; i) {
+          var cookie = cookies[i].trim();
+          if (cookie.substring(0, name.length + 1) ===(name + '=')) {
+            cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+            break;
+          }
+        }
+      }
+      return cookieValue;
+    }
+    var testToken = getCookie('testToken');
+
+  var total = '{{total}}'
+
+  function completeOrder() {
+    var url = "{% url 'ecommerce:complete' %}"
+      fetch(url, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'x-TestToken': testToken,
+        },
+        body: JSON.stringify({'customer': sessionStorage.getItem('customer')})
+      })
+  }
+
+  paypal.Buttons({
+    style: {
+      color: 'blue',
+      shape: 'rect',
+      label: 'pay',
+      height: 40
+    },
+
+    createOrder: (data, actions) => {
+      return actions.order.create({
+        purchase_units: [{
+          amount: {
+            value: total
+          }
+        }]
+      });
+    },
+
+    onApprove: (data, actions) => {
+      return actions.order.capture().then(function(details) {
+        sessionStorage.setItem('customer', details.payer.name.given_name);
+        completeOrder()
+        sessionStorage.clear();
+        var url = "{% url 'ecommerce:success' %}"
+        window.location = url;
+      });
+    } 
+ 
+  })
+  </script>
+
+{% endblock %}

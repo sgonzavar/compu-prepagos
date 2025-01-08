@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+{% load static %}
+{% load bootstrap4 %}
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
+  <title>
+    {% block title %}
+      Compu - Prepago
+    {% endblock %}
+  </title>
+</head>
+<body>
+  <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <a class="navbar-brand" href="/">Home</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+  
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav mr-auto">
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-expanded="false">
+            Dropdown
+          </a>
+          <div class="dropdown-menu" aria-labelledby="dropdown">
+            {% if user.is_authenticaded %}
+              <a class="dropdown-toggle" data-toggle="dropdown" href="">Cerrar Sesion</a>
+              <a class="dropdown-toggle" data-toggle="dropdown" href="">Perfil</a>
+            {% else %}
+              <a class="dropdown-toggle" data-toggle="dropdown" href="">ingresar 1</a>
+              <a class="dropdown-toggle" data-toggle="dropdown" href="">ingresar 2</a>
+              <a class="dropdown-toggle" data-toggle="dropdown" href="">ingresar 3</a>
+            {% endif %}
+          </div>
+        </li>
+      </ul>
+      <form class="form-inline my-2 my-lg-0 mr-4" action="{% url 'ecommerce:search' %}">
+        <input class="form-control mr-sm-2" name="input" type="search" placeholder="Search" aria-label="Search">
+        <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+      </form>
+      <a href="/mycar" class="btn btn-outline-success"> 
+        {{ request.session.data.count}} 
+        Item
+        {{ request.session.data.count|pluralize }}
+      </a>
+    </div>
+  </nav>
+
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-3">
+        <img src="{% static 'ecommerce/img/logo.png' %}">
+        <div class="list-group">
+          {% for cat in categories %}
+            <a href="{% url 'ecommerce:categories' cat.slug %}" class="list-group-item">{{cat.name}}</a>
+          {% endfor %}
+        </div>
+      </div>
+      <div class="col-lg-9 mt-3">
+        {% bootstrap_messages %}
+        {% block header %}
+        {% endblock %}
+        {% block content %}
+        {% endblock %}
+      </div>
+    </div>
+  </div>
+  <footer class="py-5 bg-dark">
+    <div class="container">
+      <p class="m-0 text-center text-white">copyright &copy; Ecommerce</p>
+    </div>
+  </footer>
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-Fy6S3B9q64WdZWQUiU+q4/2Lc9npb8tCaSX9FK7E8HnRr0Jz8D6OP9dO5Vg3Q9ct" crossorigin="anonymous"></script>
+</body>
+</html>
